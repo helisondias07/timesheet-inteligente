@@ -20,10 +20,23 @@ describe("horas manuais", () => {
     ).toBe(true);
   });
 
+  it("aceita 1,5 e 1.5 como o mesmo valor e vazio como nulo", () => {
+    expect(parseHours("1,5", "estimatedHours")).toEqual({ ok: true, hours: 1.5 });
+    expect(parseHours("1.5", "estimatedHours")).toEqual({ ok: true, hours: 1.5 });
+    expect(parseHours(" 1,50 ", "estimatedHours")).toEqual({ ok: true, hours: 1.5 });
+    expect(parseHours("", "estimatedHours")).toEqual({ ok: true, hours: null });
+    expect(parseHours("   ", "estimatedHours")).toEqual({ ok: true, hours: null });
+    expect(parseHours(null, "estimatedHours")).toEqual({ ok: true, hours: null });
+  });
+
   it("rejeita negativas, NaN e excesso por item", () => {
     expect(parseHours(-1, "estimatedHours").ok).toBe(false);
+    expect(parseHours("-0,5", "estimatedHours").ok).toBe(false);
     expect(parseHours(Number.NaN, "estimatedHours").ok).toBe(false);
+    expect(parseHours("abc", "estimatedHours").ok).toBe(false);
+    expect(parseHours("1,5,0", "estimatedHours").ok).toBe(false);
     expect(parseHours(13, "estimatedHours").ok).toBe(false);
+    expect(parseHours("12,1", "estimatedHours").ok).toBe(false);
     expect(parseHours(2, "estimatedHours").ok).toBe(true);
   });
 

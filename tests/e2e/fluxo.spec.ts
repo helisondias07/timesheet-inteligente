@@ -33,7 +33,11 @@ test.describe("fluxo UI carregar / importar / editar / revisar / exportar", () =
     await title.fill('Tarefa revisada "café" da loja demo');
     const hours = page.locator('input[id^="hours-"]').first();
     await hours.fill("1,5");
+    await hours.blur();
+    await expect(hours).toHaveValue("1.5");
     await hours.fill("1.5");
+    await hours.blur();
+    await expect(hours).toHaveValue("1.5");
 
     await page.getByRole("button", { name: "Aprovar dia" }).first().click();
     await expect(page.getByText("Aprovado (humano)").first()).toBeVisible();

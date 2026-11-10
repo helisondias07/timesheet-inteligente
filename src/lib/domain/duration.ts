@@ -5,16 +5,46 @@ export type HoursParse =
   | { ok: true; hours: number | null }
   | { ok: false; hours: null; warning: Warning };
 
+/**
+ * Gramática inequívoca de horas (entrada humana ou JSON):
+ * - vazio / só espaços / null → nulo (sem duração)
+ * - inteiro: 0, 8, 12
+ * - decimal com ponto OU vírgula: 1.5 e 1,5 são o mesmo valor (1,5 h)
+ * - não há milhar: "1.500" é mil e quinhentos milésimos, não "mil e quinhentos"
+ * - nunca deriva duração de timestamp ou evidência
+ */
+const DECIMAL_RE = /^-?\d+([.,]\d+)?$/;
+
+export function normalizeHoursToken(raw: unknown): string | null {
+  if (raw == null) return null;
+  if (typeof raw === "number") {
+    if (!Number.isFinite(raw)) return "nan";
+    return String(raw);
+  }
+  if (typeof raw !== "string") return "invalid";
+  const trimmed = raw.trim();
+  if (trimmed === "") return null;
+  return trimmed;
+}
+
 export function parseHours(raw: unknown, field: string): HoursParse {
-  if (raw == null || raw === "") {
+  const token = normalizeHoursToken(raw);
+  if (token === null) {
     return { ok: true, hours: null };
   }
-
-  if (typeof raw === "string" && raw.trim() === "") {
-    return { ok: true, hours: null };
+  if (token === "nan" || token === "invalid" || !DECIMAL_RE.test(token)) {
+    return {
+      ok: false,
+      hours: null,
+      warning: {
+        code: "HORAS_NAN",
+        message: `${field} deve ser um número (ex.: 1,5 ou 1.5). Vazio permanece nulo.`,
+        field,
+      },
+    };
   }
 
-  const numeric = typeof raw === "number" ? raw : Number(raw);
+  const numeric = Number(token.replace(",", "."));
   if (!Number.isFinite(numeric)) {
     return {
       ok: false,

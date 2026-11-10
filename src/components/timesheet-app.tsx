@@ -566,10 +566,14 @@ function DayCard({
                   id={`hours-${item.id}`}
                   data-testid={`hours-${item.id}`}
                   inputMode="decimal"
-                  placeholder="vazio até você preencher"
+                  placeholder="vazio, ou 1,5 / 1.5"
                   value={item.estimatedHours ?? ""}
                   onChange={(event) => onHours(item.id, event.target.value)}
                 />
+                <p className="text-xs text-[var(--muted-ink)]">
+                  Aceita 1,5 e 1.5. Vazio continua nulo. Não deriva de
+                  timestamp.
+                </p>
                 <p className="text-xs text-[var(--muted-ink)]">
                   Registradas na origem:{" "}
                   {item.registeredHours == null ? "nula" : `${item.registeredHours}h`}
