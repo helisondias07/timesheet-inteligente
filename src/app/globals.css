@@ -5,7 +5,8 @@
   --paper-strong: #fffaf0;
   --ink: #16141c;
   --muted-ink: #4a4558;
-  --muted: #7a7488;
+  /* Antes #7a7488 ≈ 3,75:1 no papel #f3ead8 (texto pequeno). Meta local ≥ 4,5:1. */
+  --muted: #4a4558;
   --rule: #c9bda6;
   --stamp: #b42318;
   --teal: #0f5c59;
