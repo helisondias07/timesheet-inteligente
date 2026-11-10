@@ -11,9 +11,12 @@ function viewportName(page: Page) {
 
 async function saveShot(page: Page, name: string) {
   fs.mkdirSync(screenshotDir, { recursive: true });
-  const file = path.join(screenshotDir, `${name}-${viewportName(page)}.png`);
-  await page.screenshot({ path: file, fullPage: true });
-  return file;
+  const vp = viewportName(page);
+  const full = path.join(screenshotDir, `${name}-${vp}-fullpage.png`);
+  const view = path.join(screenshotDir, `${name}-${vp}-viewport.png`);
+  await page.screenshot({ path: full, fullPage: true });
+  await page.screenshot({ path: view, fullPage: false });
+  return view;
 }
 
 test.describe("fluxo UI carregar / importar / editar / revisar / exportar", () => {

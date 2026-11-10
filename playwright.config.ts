@@ -12,25 +12,29 @@ export default defineConfig({
     trace: "on-first-retry",
   },
   webServer: {
-    command: `npx next start --hostname 127.0.0.1 --port ${port}`,
+    command: `npx next dev --hostname 127.0.0.1 --port ${port}`,
     url: baseURL,
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },
   projects: [
     {
       name: "desktop-1440",
       use: {
-        ...devices["Desktop Chrome"],
+        browserName: "chromium",
         viewport: { width: 1440, height: 900 },
+        deviceScaleFactor: 1,
       },
     },
     {
       name: "mobile-390",
       use: {
+        browserName: "chromium",
         ...devices["Pixel 7"],
         viewport: { width: 390, height: 844 },
+        deviceScaleFactor: 1,
         hasTouch: true,
+        isMobile: true,
       },
     },
   ],
