@@ -1,5 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
+/** Porta exclusiva do E2E. A demo local (`npm run dev` / `npm start`) usa 43147. */
 const port = Number(process.env.PORT ?? 43157);
 const baseURL = `http://127.0.0.1:${port}`;
 
@@ -12,10 +13,10 @@ export default defineConfig({
     trace: "on-first-retry",
   },
   webServer: {
-    command: `npx next dev --hostname 127.0.0.1 --port ${port}`,
+    command: `npx next build && npx next start --hostname 127.0.0.1 --port ${port}`,
     url: baseURL,
     reuseExistingServer: false,
-    timeout: 120_000,
+    timeout: 180_000,
   },
   projects: [
     {

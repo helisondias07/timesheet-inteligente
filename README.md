@@ -41,12 +41,16 @@ rm -rf node_modules .next next-env.d.ts
 npm ci
 npm run typecheck    # deve passar aqui, ANTES de qualquer build
 npm test
-npm run test:all     # inclui Playwright (sobe next start)
 npm run lint
+npm run test:all     # vitest + tsc + Playwright (ver porta e comando abaixo)
 npm run build
 ```
 
-Abra `http://127.0.0.1:43147`.
+**Portas**
+- Demo local: `npm run dev` ou `npm start` → `http://127.0.0.1:43147`
+- E2E (`npm run test:e2e` / Playwright dentro de `npm run test:all`): `playwright.config.ts` executa `npx next build && npx next start --hostname 127.0.0.1 --port 43157` (`reuseExistingServer: false`). Não é a porta da demo.
+
+Antes do E2E, nada deve estar escutando em **43157** (e evite outro `next` no mesmo diretório).
 
 ### Demo local
 
