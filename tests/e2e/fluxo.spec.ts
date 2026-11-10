@@ -84,6 +84,8 @@ test.describe("fluxo UI carregar / importar / editar / revisar / exportar", () =
     await trigger.click();
     await expect(page.getByTestId("help-dialog")).toBeVisible();
     await expect(page.locator("#atalhos-titulo")).toBeFocused();
+    await expect(page.getByRole("heading", { name: "Operação por teclado" })).toBeVisible();
+    await saveShot(page, `06-dialogo-${testInfo.project.name}`);
     await page.keyboard.press("Tab");
     await expect(page.getByTestId("help-close")).toBeFocused();
     await page.keyboard.press("Tab");
@@ -95,6 +97,5 @@ test.describe("fluxo UI carregar / importar / editar / revisar / exportar", () =
     await page.keyboard.press("Escape");
     await expect(page.getByTestId("help-dialog")).toHaveCount(0);
     await expect(trigger).toBeFocused();
-    await saveShot(page, `06-dialogo-${testInfo.project.name}`);
   });
 });
