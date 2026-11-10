@@ -4,6 +4,12 @@ export const SCHEMA_EXPORT = "timesheet-inteligente.exportacao.v1" as const;
 export const IDENTITY_VERSION = "v1" as const;
 export const MAX_HOURS_PER_ITEM = 12;
 export const MAX_HOURS_PER_DAY = 24;
+export const MAX_PAYLOAD_BYTES = 256 * 1024;
+export const MAX_ACTIVITIES = 500;
+export const MAX_TEXT_LENGTH = 4000;
+export const MAX_URL_LENGTH = 2048;
+export const MAX_URLS_PER_ACTIVITY = 20;
+export const MAX_NATIVE_ID_LENGTH = 256;
 export const SYNTHETIC_MODE = "synthetic-demo" as const;
 export const REVIEW_STATUSES = [
   "rascunho",

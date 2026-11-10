@@ -8,6 +8,12 @@ import {
 } from "./constants";
 import { parseHours } from "./duration";
 import { buildStableId } from "./identity";
+import {
+  LIMIT_COPY,
+  nativeIdTooLong,
+  textTooLong,
+  tooManyActivities,
+} from "./limits";
 import { sanitizePlainText, sanitizeUrlList } from "./sanitize";
 import { parseTimestamp } from "./timezone";
 import type {
@@ -85,6 +91,12 @@ export function parseActivity(
       message: "nativeId é obrigatório para identidade estável.",
       code: "IDENTIDADE_AUSENTE",
     });
+  } else if (nativeIdTooLong(native)) {
+    issues.push({
+      path: `${path}.nativeId`,
+      message: LIMIT_COPY.nativeId,
+      code: "LIMITE_TEXTO",
+    });
   }
 
   const title = sanitizePlainText(raw.title);
@@ -98,6 +110,13 @@ export function parseActivity(
       path: `${path}.title`,
       message: "title é obrigatório.",
       code: "CAMPO_OBRIGATORIO",
+    });
+  }
+  if (textTooLong(title.text) || textTooLong(description.text)) {
+    issues.push({
+      path: `${path}.title`,
+      message: LIMIT_COPY.text,
+      code: "LIMITE_TEXTO",
     });
   }
 
@@ -236,6 +255,24 @@ export function validateImportPayload(
       activities: [],
       issues,
       warnings: [...warnings, warning("PAYLOAD_INVALIDO")],
+      sources: [],
+      synthetic: true,
+      timezone: APP_TIMEZONE,
+    };
+  }
+
+  if (tooManyActivities(payload.activities.length)) {
+    return {
+      ok: false,
+      activities: [],
+      issues: [
+        {
+          path: "activities",
+          message: LIMIT_COPY.items,
+          code: "LIMITE_ITENS",
+        },
+      ],
+      warnings: [warning("LIMITE_ITENS")],
       sources: [],
       synthetic: true,
       timezone: APP_TIMEZONE,

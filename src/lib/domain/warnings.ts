@@ -21,6 +21,12 @@ export const WARNING_COPY: Record<WarningCode, string> = {
   DUPLICATA_MESCLADA: "Duplicata verdadeira mesclada pela identidade estável.",
   IDENTIDADE_AUSENTE: "Identidade nativa ausente.",
   CAMPO_OBRIGATORIO: "Campo obrigatório ausente.",
+  LIMITE_PAYLOAD: "O JSON excede o limite de tamanho deste MVP.",
+  LIMITE_ITENS: "Número de atividades excede o limite deste MVP.",
+  LIMITE_TEXTO: "Texto excede o comprimento máximo permitido.",
+  LIMITE_URL: "URL excede o comprimento máximo ou a quantidade por item.",
+  TEXTO_COM_MARCACAO:
+    "Há marcação no texto; é tratada como texto inerte, não como HTML executável.",
 };
 
 export function warning(code: WarningCode, extra?: Partial<Warning>): Warning {

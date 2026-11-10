@@ -1,6 +1,7 @@
 import {
   MAX_HOURS_PER_DAY,
   MAX_HOURS_PER_ITEM,
+  MAX_TEXT_LENGTH,
   REVIEW_STATUSES,
   type ReviewStatus,
 } from "./constants";
@@ -80,9 +81,39 @@ export function updateItemText(
     if (day.dateLocal !== dateLocal) return day;
     return {
       ...day,
-      items: day.items.map((item) =>
-        item.id === itemId ? { ...item, ...patch } : item,
-      ),
+      items: day.items.map((item) => {
+        if (item.id !== itemId) return item;
+        const next = { ...item };
+        const extra: Warning[] = item.warnings.filter(
+          (entry) => entry.code !== "LIMITE_TEXTO",
+        );
+        if (patch.title !== undefined) {
+          if (patch.title.length > MAX_TEXT_LENGTH) {
+            extra.push({
+              code: "LIMITE_TEXTO",
+              message: `Título excede ${MAX_TEXT_LENGTH} caracteres e não foi aplicado.`,
+              activityId: item.id,
+              field: "title",
+            });
+          } else {
+            next.title = patch.title;
+          }
+        }
+        if (patch.description !== undefined) {
+          if (patch.description.length > MAX_TEXT_LENGTH) {
+            extra.push({
+              code: "LIMITE_TEXTO",
+              message: `Descrição excede ${MAX_TEXT_LENGTH} caracteres e não foi aplicada.`,
+              activityId: item.id,
+              field: "description",
+            });
+          } else {
+            next.description = patch.description;
+          }
+        }
+        next.warnings = extra;
+        return next;
+      }),
       reviewStatus:
         day.reviewStatus === "aprovado" ? "precisa_revisao" : day.reviewStatus,
     };

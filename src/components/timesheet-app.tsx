@@ -12,11 +12,12 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { clickupOfflinePort } from "@/lib/adapters/clickup-offline";
 import { githubOfflinePort } from "@/lib/adapters/github-offline";
-import { APP_TIMEZONE, type ReviewStatus } from "@/lib/domain/constants";
+import { APP_TIMEZONE, MAX_TEXT_LENGTH, type ReviewStatus } from "@/lib/domain/constants";
 import { exportDraft, downloadBlob } from "@/lib/domain/export";
 import {
   applyDays,
   emptyWorkspace,
+  ingestJsonText,
   ingestPayload,
   type WorkspaceState,
 } from "@/lib/domain/pipeline";
@@ -89,25 +90,19 @@ export function TimesheetApp() {
   }, [commit]);
 
   const importJson = useCallback(() => {
-    try {
-      const parsed = JSON.parse(importText);
-      const ingested = ingestPayload(workspace, parsed, "json-import");
-      commit(ingested.state, ingested.draft);
-      if (!ingested.result.ok) {
-        setImportError(
-          ingested.result.issues.map((issue) => `${issue.path}: ${issue.message}`).join(" "),
-        );
-        setMessage("Importação recusada. Veja o estado de erro.");
-        return;
-      }
-      setImportError(null);
-      setMessage(
-        `Importação sintética aceita. ${ingested.result.activities.length} registros no lote; ${ingested.state.activities.length} no rascunho após idempotência.`,
+    const ingested = ingestJsonText(workspace, importText, "json-import");
+    commit(ingested.state, ingested.draft);
+    if (!ingested.result.ok) {
+      setImportError(
+        ingested.result.issues.map((issue) => `${issue.path}: ${issue.message}`).join(" "),
       );
-    } catch {
-      setImportError("JSON inválido: o texto não pôde ser analisado.");
-      setMessage("Importação recusada. JSON malformado.");
+      setMessage("Importação recusada. Veja o estado de erro.");
+      return;
     }
+    setImportError(null);
+    setMessage(
+      `Importação sintética aceita. ${ingested.result.activities.length} registros no lote; ${ingested.state.activities.length} no rascunho após idempotência.`,
+    );
   }, [commit, importText, workspace]);
 
   const loadErrorFixture = useCallback(() => {
@@ -555,6 +550,7 @@ function DayCard({
                 <Input
                   id={`title-${item.id}`}
                   value={item.title}
+                  maxLength={MAX_TEXT_LENGTH}
                   onChange={(event) => onTitle(item.id, event.target.value)}
                 />
               </div>
@@ -586,6 +582,7 @@ function DayCard({
                 id={`desc-${item.id}`}
                 className="min-h-20"
                 value={item.description}
+                maxLength={MAX_TEXT_LENGTH}
                 onChange={(event: ChangeEvent<HTMLTextAreaElement>) => onDescription(item.id, event.target.value)}
               />
             </div>

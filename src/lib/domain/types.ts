@@ -25,7 +25,12 @@ export type WarningCode =
   | "NAO_SINTETICO"
   | "DUPLICATA_MESCLADA"
   | "IDENTIDADE_AUSENTE"
-  | "CAMPO_OBRIGATORIO";
+  | "CAMPO_OBRIGATORIO"
+  | "LIMITE_PAYLOAD"
+  | "LIMITE_ITENS"
+  | "LIMITE_TEXTO"
+  | "LIMITE_URL"
+  | "TEXTO_COM_MARCACAO";
 
 export interface Warning {
   code: WarningCode;

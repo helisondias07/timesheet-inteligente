@@ -1,8 +1,10 @@
 import { APP_TIMEZONE } from "./constants";
 import { reimportActivities } from "./dedupe";
 import { groupBySaoPauloDay } from "./group-days";
+import { LIMIT_COPY, payloadTooLarge } from "./limits";
 import { buildDraft } from "./proposal";
 import { validateImportPayload } from "./validate-import";
+import { warning } from "./warnings";
 import type {
   DailyProposal,
   IdentifiedActivity,
@@ -26,6 +28,69 @@ export function emptyWorkspace(): WorkspaceState {
     importLog: [],
     lastImportOk: false,
   };
+}
+
+export function ingestJsonText(
+  state: WorkspaceState,
+  text: string,
+  adapter: "json-import" | "fixture-loader" | "offline-fixture" = "json-import",
+): { state: WorkspaceState; result: ImportResult; draft: TimesheetDraft } {
+  if (payloadTooLarge(text)) {
+    const result: ImportResult = {
+      ok: false,
+      activities: [],
+      issues: [
+        {
+          path: "$",
+          message: LIMIT_COPY.payload,
+          code: "LIMITE_PAYLOAD",
+        },
+      ],
+      warnings: [warning("LIMITE_PAYLOAD")],
+      sources: [],
+      synthetic: true,
+      timezone: APP_TIMEZONE,
+    };
+    return {
+      state: {
+        ...state,
+        importLog: [...state.importLog, result],
+        lastImportOk: false,
+      },
+      result,
+      draft: buildDraft(state.days, state.activities, state.sources),
+    };
+  }
+
+  try {
+    const parsed: unknown = JSON.parse(text);
+    return ingestPayload(state, parsed, adapter);
+  } catch {
+    const result: ImportResult = {
+      ok: false,
+      activities: [],
+      issues: [
+        {
+          path: "$",
+          message: "JSON inválido: o texto não pôde ser analisado.",
+          code: "PAYLOAD_INVALIDO",
+        },
+      ],
+      warnings: [warning("PAYLOAD_INVALIDO")],
+      sources: [],
+      synthetic: true,
+      timezone: APP_TIMEZONE,
+    };
+    return {
+      state: {
+        ...state,
+        importLog: [...state.importLog, result],
+        lastImportOk: false,
+      },
+      result,
+      draft: buildDraft(state.days, state.activities, state.sources),
+    };
+  }
 }
 
 export function ingestPayload(

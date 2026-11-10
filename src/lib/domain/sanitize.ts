@@ -1,3 +1,7 @@
+import {
+  MAX_URLS_PER_ACTIVITY,
+  MAX_URL_LENGTH,
+} from "./constants";
 import type { Warning, WarningCode } from "./types";
 
 const UNSAFE_PROTOCOLS = new Set([
@@ -35,6 +39,9 @@ export function sanitizeUrl(raw: string): {
 } {
   const candidate = raw.trim();
   if (!candidate) return { url: null, warning: "URL_INVALIDA" };
+  if (candidate.length > MAX_URL_LENGTH) {
+    return { url: null, warning: "LIMITE_URL" };
+  }
 
   let parsed: URL;
   try {
@@ -71,7 +78,14 @@ export function sanitizeUrlList(raw: unknown): {
 
   const urls: string[] = [];
   const warnings: Warning[] = [];
-  for (const item of raw) {
+  if (raw.length > MAX_URLS_PER_ACTIVITY) {
+    warnings.push({
+      code: "LIMITE_URL",
+      message: `originUrls excede ${MAX_URLS_PER_ACTIVITY} itens; extras ignorados.`,
+      field: "originUrls",
+    });
+  }
+  for (const item of raw.slice(0, MAX_URLS_PER_ACTIVITY)) {
     if (typeof item !== "string") {
       warnings.push({
         code: "URL_INVALIDA",
