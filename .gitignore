@@ -45,6 +45,10 @@ next-env.d.ts
 /test-results/
 /blob-report/
 
+# capturas regeneradas da revisão (vão no pacote de evidências, não no git)
+artifacts/screenshots/*-viewport.png
+artifacts/screenshots/*-fullpage.png
+
 # local env secrets
 .env.local
 .env.*.local
