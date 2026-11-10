@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f3ead8;
+  --paper-strong: #fffaf0;
+  --ink: #16141c;
+  --muted-ink: #4a4558;
+  --muted: #7a7488;
+  --rule: #c9bda6;
+  --stamp: #b42318;
+  --teal: #0f5c59;
+  --background: var(--paper);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+html,
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  background-image:
+    linear-gradient(to right, rgba(22, 20, 28, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(22, 20, 28, 0.035) 1px, transparent 1px);
+  background-size: 28px 28px;
+  min-height: 100%;
+}
+
+.stamp {
+  box-shadow: inset 0 0 0 1px rgba(180, 35, 24, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

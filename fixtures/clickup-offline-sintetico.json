@@ -1,0 +1,15 @@
+{
+  "synthetic": true,
+  "mode": "offline-fixture",
+  "disclaimer": "FIXTURE SINTÉTICA. Não é workspace ClickUp real. Host clickup.example.com.",
+  "tasks": [
+    {
+      "id": "CU-SIN-77",
+      "name": "Tarefa sintética de atendimento da loja demo",
+      "description": "Horas registradas na origem: 2. Estimativa manual permanece vazia.",
+      "url": "https://app.clickup.example.com/t/CU-SIN-77",
+      "date_updated": "2026-04-10T21:00:00-03:00",
+      "time_spent_hours": 2
+    }
+  ]
+}

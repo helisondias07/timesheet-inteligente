@@ -1,0 +1,49 @@
+{
+  "schema": "timesheet-inteligente.exportacao.v1",
+  "synthetic": true,
+  "mode": "synthetic-demo",
+  "timezone": "America/Sao_Paulo",
+  "generatedAt": "2026-04-12T15:00:00.000Z",
+  "disclaimer": "EXPORTAÇÃO SINTÉTICA DE DEMONSTRAÇÃO. Não é apontamento real.",
+  "review": {
+    "overallStatus": "precisa_revisao",
+    "humanApprovalRequired": true,
+    "notes": "Rascunho de demonstração. Não é apontamento oficial."
+  },
+  "sources": ["github-offline-sintetico", "clickup-offline-sintetico", "importacao-sintetica"],
+  "warnings": [
+    {
+      "code": "HORAS_AUSENTES",
+      "message": "Duração sugerida permanece vazia até entrada humana explícita."
+    }
+  ],
+  "days": [
+    {
+      "dateLocal": "2026-04-09",
+      "timezone": "America/Sao_Paulo",
+      "reviewStatus": "aprovado",
+      "reviewNote": "Revisão humana de demonstração",
+      "dayWarnings": [],
+      "items": [
+        {
+          "id": "v1|github|commit|c0ffee01abc",
+          "title": "Ajuste de filtro de vitrine na loja demo",
+          "description": "Exemplo sintético com aspas \"duplas\", acento café e\nquebra de linha.",
+          "estimatedHours": 1,
+          "registeredHours": null,
+          "originUrls": [
+            "https://github.example.com/demo-sintetico/loja-demo/commit/c0ffee01abc",
+            "https://example.org/espelho-sintetico/c0ffee01abc"
+          ],
+          "originalTimestamps": ["2026-04-10T02:30:00Z"],
+          "sources": ["github-offline-sintetico"]
+        }
+      ]
+    }
+  ],
+  "rules": [
+    "Não inventar trabalho.",
+    "Não derivar duração a partir de commits ou timestamps.",
+    "Não distribuir 8h automaticamente."
+  ]
+}

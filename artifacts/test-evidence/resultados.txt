@@ -1,0 +1,29 @@
+Resultados medidos nesta execução (não inventados)
+
+Unitários (vitest run):
+- 8 arquivos
+- 26 testes
+- todos passaram
+- duração ~819ms
+
+Typecheck:
+- npm run typecheck → exit 0
+
+Build:
+- npm run build → exit 0
+- Next.js 16.4.6
+- rota / estática
+
+Playwright (produção, next start :43147):
+- 4 testes, 2 projetos (desktop-1440 1440x900 e mobile-390 390x844)
+- 4 passed
+- cobertura: estado vazio, fixture sintética, edição, revisão humana, export JSON/CSV, estado de erro, Tab/Enter no teclado
+
+Comandos:
+  npm test
+  npm run typecheck
+  npm run build
+  npx playwright install chromium
+  npx playwright test
+
+Isto NÃO mede uso real, tempo economizado nem integração GitHub/ClickUp.

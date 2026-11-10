@@ -1,0 +1,27 @@
+Paths para cópia automática ao coordenador de portfólio
+(fonte de verdade: draft Origin; não espelhar GitHub; não publicar)
+
+Pacote-fonte (sem node_modules, sem .git, sem segredos):
+  /opt/cursor/artifacts/timesheet-inteligente-fonte.tar.gz
+  /opt/cursor/artifacts/timesheet-inteligente-fonte.zip
+
+Screenshots reais (viewport no nome do arquivo):
+  /opt/cursor/artifacts/screenshots/01-vazio-desktop-1440-1440x900.png
+  /opt/cursor/artifacts/screenshots/01-vazio-mobile-390-390x844.png
+  /opt/cursor/artifacts/screenshots/02-fixture-desktop-1440-1440x900.png
+  /opt/cursor/artifacts/screenshots/02-fixture-mobile-390-390x844.png
+  /opt/cursor/artifacts/screenshots/03-revisao-desktop-1440-1440x900.png
+  /opt/cursor/artifacts/screenshots/03-revisao-mobile-390-390x844.png
+  /opt/cursor/artifacts/screenshots/04-erro-desktop-1440-1440x900.png
+  /opt/cursor/artifacts/screenshots/04-erro-mobile-390-390x844.png
+  /opt/cursor/artifacts/screenshots/05-teclado-desktop-1440-1440x900.png
+  /opt/cursor/artifacts/screenshots/05-teclado-mobile-390-390x844.png
+  /opt/cursor/artifacts/demo-desktop-1440x900.png
+  /opt/cursor/artifacts/demo-mobile-390x844.png
+
+Evidência de testes:
+  /opt/cursor/artifacts/test-evidence/resultados.txt
+  /opt/cursor/artifacts/PATHS-COPIA.txt
+
+Sugestão de slug (não publicada): timesheet-inteligente
+Destino local futuro (não copiado por este agente): C:\Users\HelisonDias\Repositorios

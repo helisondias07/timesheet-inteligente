@@ -1,0 +1,24 @@
+{
+  "synthetic": true,
+  "mode": "offline-fixture",
+  "disclaimer": "FIXTURE SINTÉTICA. Não é um repositório real. Host github.example.com.",
+  "commits": [
+    {
+      "sha": "aa11bb22cc33",
+      "html_url": "https://github.example.com/demo-sintetico/loja-demo/commit/aa11bb22cc33",
+      "commit": {
+        "message": "Corrige cupom sintético na PDP\n\nApenas demonstração.",
+        "author": { "date": "2026-04-09T23:30:00Z" }
+      }
+    }
+  ],
+  "pullRequests": [
+    {
+      "number": 7,
+      "title": "PR sintético de cupom",
+      "body": "Descrição fictícia.",
+      "html_url": "https://github.example.com/demo-sintetico/loja-demo/pull/7",
+      "updated_at": "2026-04-10T01:05:00Z"
+    }
+  ]
+}

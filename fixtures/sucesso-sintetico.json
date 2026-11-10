@@ -1,0 +1,132 @@
+{
+  "schema": "timesheet-inteligente.atividades.v1",
+  "synthetic": true,
+  "timezoneDefault": "America/Sao_Paulo",
+  "disclaimer": "FIXTURE SINTÉTICA DE DEMONSTRAÇÃO. Domínios example. Nenhuma conta real.",
+  "activities": [
+    {
+      "nativeId": "c0ffee01abc",
+      "kind": "commit",
+      "sourceKind": "github",
+      "sourceLabel": "github-offline-sintetico",
+      "title": "Ajuste de filtro de vitrine na loja demo",
+      "description": "Commit sintético para evidência de frontend.",
+      "occurredAt": "2026-04-10T02:30:00Z",
+      "originUrls": [
+        "https://github.example.com/demo-sintetico/loja-demo/commit/c0ffee01abc"
+      ],
+      "evidence": {
+        "kind": "commit_sha",
+        "value": "c0ffee01abc",
+        "summary": "SHA sintético c0ffee01abc"
+      },
+      "registeredHours": null
+    },
+    {
+      "nativeId": "c0ffee01abc",
+      "kind": "commit",
+      "sourceKind": "github",
+      "sourceLabel": "github-offline-sintetico",
+      "title": "Ajuste de filtro de vitrine na loja demo",
+      "description": "Reimportação do mesmo SHA sintético (idempotência).",
+      "occurredAt": "2026-04-10T02:30:00Z",
+      "originUrls": [
+        "https://github.example.com/demo-sintetico/loja-demo/commit/c0ffee01abc",
+        "https://example.org/espelho-sintetico/c0ffee01abc"
+      ],
+      "evidence": {
+        "kind": "commit_sha",
+        "value": "c0ffee01abc",
+        "summary": "SHA sintético c0ffee01abc"
+      },
+      "registeredHours": null
+    },
+    {
+      "nativeId": "c0ffee02def",
+      "kind": "commit",
+      "sourceKind": "github",
+      "sourceLabel": "github-offline-sintetico",
+      "title": "Ajuste de filtro de vitrine na loja demo",
+      "description": "Outro commit sintético com o mesmo título, identidade distinta.",
+      "occurredAt": "2026-04-10T04:15:00Z",
+      "originUrls": [
+        "https://github.example.com/demo-sintetico/loja-demo/commit/c0ffee02def"
+      ],
+      "evidence": {
+        "kind": "commit_sha",
+        "value": "c0ffee02def",
+        "summary": "SHA sintético c0ffee02def"
+      },
+      "registeredHours": null
+    },
+    {
+      "nativeId": "pr-42",
+      "kind": "pull_request",
+      "sourceKind": "github",
+      "sourceLabel": "github-offline-sintetico",
+      "title": "PR sintético: checkout da loja demo",
+      "description": "Pull request de exemplo.org, sem cliente real.",
+      "occurredAt": "2026-04-10T18:00:00-03:00",
+      "originUrls": [
+        "https://github.example.com/demo-sintetico/loja-demo/pull/42"
+      ],
+      "evidence": {
+        "kind": "pr_number",
+        "value": "42",
+        "summary": "PR sintético 42"
+      },
+      "registeredHours": null
+    },
+    {
+      "nativeId": "TASK-SIN-1001",
+      "kind": "task",
+      "sourceKind": "clickup",
+      "sourceLabel": "clickup-offline-sintetico",
+      "title": "Revisar evidências do checkout demo",
+      "description": "Tarefa ClickUp fictícia. Horas registradas na origem = 1,5; estimativa manual continua vazia.",
+      "occurredAt": "2026-04-11T10:00:00-03:00",
+      "originUrls": [
+        "https://app.clickup.example.com/t/TASK-SIN-1001"
+      ],
+      "evidence": {
+        "kind": "task_id",
+        "value": "TASK-SIN-1001",
+        "summary": "Tarefa sintética TASK-SIN-1001"
+      },
+      "registeredHours": 1.5
+    },
+    {
+      "nativeId": "TASK-SIN-1002",
+      "kind": "task",
+      "sourceKind": "clickup",
+      "sourceLabel": "clickup-offline-sintetico",
+      "title": "Sem evidência (caso de aviso)",
+      "description": "Esta linha existe para o estado de dados insuficientes.",
+      "occurredAt": "2026-04-11T15:00:00-03:00",
+      "originUrls": [
+        "https://app.clickup.example.com/t/TASK-SIN-1002"
+      ],
+      "registeredHours": null
+    },
+    {
+      "nativeId": "html-inject-01",
+      "kind": "task",
+      "sourceKind": "json_import",
+      "sourceLabel": "importacao-sintetica",
+      "title": "<script>alert(1)</script>Título com HTML sintético",
+      "description": "javascript:alert(1) não deve virar link.",
+      "occurredAt": "2026-04-11T16:00:00-03:00",
+      "originUrls": [
+        "javascript:alert(1)",
+        "data:text/html,oops",
+        "https://example.net/demo-sintetico/ok"
+      ],
+      "evidence": {
+        "kind": "import_record",
+        "value": "html-inject-01",
+        "summary": "Registro sintético de sanitização"
+      },
+      "registeredHours": null
+    }
+  ]
+}

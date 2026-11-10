@@ -1,0 +1,4 @@
+data_local,fuso,titulo,descricao,horas_estimadas_manuais,horas_registradas_origem,status_revisao,modo_sintetico,fontes,avisos,ids_estaveis,urls_origem,timestamps_originais,dados_insuficientes
+2026-04-09,America/Sao_Paulo,Ajuste de filtro de vitrine na loja demo,"Exemplo sintético com aspas ""duplas"", acento café e
+quebra de linha.",1,,aprovado,synthetic-demo,github-offline-sintetico,HORAS_AUSENTES,v1|github|commit|c0ffee01abc,https://github.example.com/demo-sintetico/loja-demo/commit/c0ffee01abc | https://example.org/espelho-sintetico/c0ffee01abc,2026-04-10T02:30:00Z,nao
+2026-04-11,America/Sao_Paulo,"'=CMD('calc')","'+1+1",,,,precisa_revisao,synthetic-demo,importacao-sintetica,URL_PROTOCOLO_INSEGURO,v1|json_import|task|html-inject-01,https://example.net/demo-sintetico/ok,2026-04-11T16:00:00-03:00,nao
