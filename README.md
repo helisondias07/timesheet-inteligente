@@ -29,8 +29,21 @@ Inspiração contextual (sem cópia de narrativa, UI, resultados ou código): ar
 Requisito: Node.js 22+.
 
 ```bash
-npm install
+npm ci
+npm run typecheck
 npm run dev
+```
+
+`npm run typecheck` **não** depende de `next build` nem de `next-env.d.ts` (gerado e gitignorado). O layout usa `ReactNode` explícito, não `LayoutProps` gerado. Ordem em clone limpo:
+
+```bash
+rm -rf node_modules .next next-env.d.ts
+npm ci
+npm run typecheck    # deve passar aqui, ANTES de qualquer build
+npm test
+npm run test:all     # inclui Playwright (sobe next start)
+npm run lint
+npm run build
 ```
 
 Abra `http://127.0.0.1:43147`.
