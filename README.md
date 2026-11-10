@@ -66,11 +66,13 @@ Atalhos: `Alt+2` foca o JSON, `Alt+3` importa o texto colado, `Alt+?` lista atal
 ## Testes
 
 ```bash
-npm test
+npm test                 # vitest; contagem em artifacts/test-evidence/resultados.txt
 npm run typecheck
-npm run build
 npx playwright install chromium
-npm run test:e2e
+npm run test:e2e         # next build && next start :43157
+npm run test:all         # vitest + tsc + Playwright na 43157
+npm run lint
+npm run build
 ```
 
 ## Sugestão de slug (não publicada)

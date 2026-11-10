@@ -20,8 +20,12 @@ Não se afirma exploração no runtime da demo.
 - `npm audit`: **0** (exit 0)
 - `npm audit --omit=dev`: **0** (exit 0)
 - `npx eslint src`: exit 0
-- `npx vitest run`: 8 arquivos / 27 testes, exit 0
+- `npx vitest run` **naquele commit intermediário**: 8 arquivos / 27 testes (número histórico do SHA `37016ca`, não da HEAD)
 
-Residual: nenhum no relatório npm desta árvore. O override de `minimatch` é deliberado; não usamos `audit fix --force`. Vite 8 e Vitest 5 são **dev**. Runtime da página (`--omit=dev`) já era 0 e permanece 0.
+## Árvore atual (fonte versionada)
+
+Contagens e exits do clone limpo: `artifacts/test-evidence/resultados.txt` (revisão 2). Lá: **10 arquivos / 35 testes** unitários; E2E 3 specs × 2 projetos = 6; `npm audit` e `--omit=dev` exit 0.
+
+Residual: nenhum no relatório npm da execução documentada em `resultados.txt`. O override de `minimatch` é deliberado; não usamos `audit fix --force`. Vite 8 e Vitest 5 são **dev**. Runtime da página (`--omit=dev`) já era 0 e permanece 0.
 
 Subir Vitest UI ou o servidor de testes exposto à rede continua fora do escopo da demo estática.

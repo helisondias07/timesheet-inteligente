@@ -1,6 +1,11 @@
 Paths para cópia automática ao coordenador de portfólio
 (fonte de verdade: draft Origin; não espelhar GitHub; não publicar)
 
+Demo: 127.0.0.1:43147 (`npm run dev` / `npm start`).
+E2E atual: 127.0.0.1:43157 (`next build && next start` no Playwright).
+Evidência da revisão 2: `artifacts/test-evidence/resultados.txt` e store `entrega-timesheet/revisao-2/`.
+A lista de PNGs abaixo é da primeira entrega (fullPage); não descreve o E2E atual.
+
 Pacote-fonte (sem node_modules, sem .git, sem segredos):
   /opt/cursor/artifacts/timesheet-inteligente-fonte.tar.gz
   /opt/cursor/artifacts/timesheet-inteligente-fonte.zip

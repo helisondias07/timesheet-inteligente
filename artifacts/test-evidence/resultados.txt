@@ -1,29 +1,43 @@
-Resultados medidos nesta execução (não inventados)
+Resultados medidos em clone limpo (não inventados)
+Código exercitado: 9403635 (main, após alinhar Playwright a next start :43157)
+Ambiente: Node nesta VM; data UTC no log 00-ordem.
 
-Unitários (vitest run):
-- 8 arquivos
-- 26 testes
-- todos passaram
-- duração ~819ms
+Preparação de porta (registrada em /tmp/revisao-2-logs/00-portas.txt):
+- Antes: 43147 e 43157 livres
+- pkill next / fuser -k nas duas portas
+- Depois: 43147 e 43157 livres
+- 43157 livre de novo imediatamente antes do E2E e do test:all
 
-Typecheck:
-- npm run typecheck → exit 0
+Comando inicial:
+  rm -rf node_modules .next next-env.d.ts
+  npm ci
 
-Build:
-- npm run build → exit 0
-- Next.js 16.4.6
-- rota / estática
+| # | Comando | Porta | Exit | Contagem |
+| --- | --- | --- | ---: | --- |
+| 1 | npm ci | — | 0 | lockfile |
+| 2 | npm run typecheck (ANTES de next build; next-env.d.ts e .next ausentes) | — | 0 | tsc --noEmit |
+| 3 | npm test (vitest run) | — | 0 | 10 arquivos, 35 testes, todos passaram |
+| 4 | npm run lint | — | 0 | eslint |
+| 5 | npm run test:e2e (playwright test) | 43157 | 0 | ver E2E abaixo |
+| 6 | npm run test:all (vitest + tsc + playwright) | 43157 no Playwright | 0 | unit 10/35 + E2E 6 |
+| 7 | npm run build | — | 0 | Next.js 16.4.6, rota / estática |
+| 8 | npm audit | — | 0 | 0 vulnerabilidades reportadas |
+| 9 | npm audit --omit=dev | — | 0 | 0 vulnerabilidades reportadas |
 
-Playwright (produção, next start :43147):
-- 4 testes, 2 projetos (desktop-1440 1440x900 e mobile-390 390x844)
-- 4 passed
-- cobertura: estado vazio, fixture sintética, edição, revisão humana, export JSON/CSV, estado de erro, Tab/Enter no teclado
+E2E (playwright.config.ts):
+- Comando do webServer: npx next build && npx next start --hostname 127.0.0.1 --port 43157
+- reuseExistingServer: false
+- Projetos: desktop-1440 (viewport 1440x900) e mobile-390 (viewport 390x844)
+- Testes no spec: 3
+- Por projeto: 3 passed
+- Total: 3 testes × 2 projetos = 6 passed (exit 0)
+- Specs: vazio/fixture/editar/revisar/exportar; teclado; diálogo de atalhos (screenshot 06 com diálogo ABERTO, antes do Escape)
 
-Comandos:
-  npm test
-  npm run typecheck
-  npm run build
-  npx playwright install chromium
-  npx playwright test
+Demo local (não usada neste E2E): npm run dev / npm start → 127.0.0.1:43147
+
+Screenshot 06 versionada (diálogo aberto, conferida visualmente):
+- artifacts/test-evidence/06-dialogo-desktop-aberto-1440x900.png (PNG 1440×900)
+- artifacts/test-evidence/06-dialogo-mobile-aberto-390x844.png (PNG 390×844)
 
 Isto NÃO mede uso real, tempo economizado nem integração GitHub/ClickUp.
+Não é aprovação de publicação.

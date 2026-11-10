@@ -17,7 +17,7 @@
 | Horas 1,5 e 1.5 | `duration.test.ts` | Não existe |
 | Limites payload/itens/texto | `limits.test.ts` | Não existe |
 | Diálogo atalhos (foco) | Playwright desktop+mobile | Não existe |
-| UI carregar-editar-revisar-exportar | Playwright | Não existe |
+| UI carregar-editar-revisar-exportar | Playwright `test:e2e` (porta 43157, `next build && next start`) | Não existe |
 | Porta GitHub | `github-offline-sintetico.json` | **Proibida** (`fetchRemote` erro) |
 | Porta ClickUp | `clickup-offline-sintetico.json` | **Proibida** |
 | Autenticação / dados de cliente | — | **Fora de escopo** |

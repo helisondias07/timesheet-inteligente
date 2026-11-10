@@ -14,9 +14,11 @@ Pipeline determinístico no cliente: validar → identificar → deduplicar → 
 
 Ver [decisoes.md](decisoes.md) e [contrato-conteudo.md](contrato-conteudo.md). Destaque: identidade estável; recusa de LLM; texto inerte vs href; CSV com fórmulas prefixadas; modo sintético.
 
-## Resultados (somente o que foi medido nesta execução)
+## Resultados (somente o que está versionado neste repositório)
 
-Números desta revisão: ver relatório final da sessão (typecheck limpo sem build, `test:all`, audit). Não há métrica de tempo economizado, adoção ou uso real por Helison Dias — **isso não foi medido**. Auditoria independente em SHA `513b1158` **não aprovou publicação**; esta continuação só corrige o MVP no draft.
+Fonte: [`artifacts/test-evidence/resultados.txt`](../artifacts/test-evidence/resultados.txt) — clone limpo (`rm -rf node_modules .next next-env.d.ts`, `npm ci`), typecheck **antes** do build, unitários, E2E, `test:all`, lint, build, `npm audit` e `npm audit --omit=dev`.
+
+Não copiar números para cá: se divergirem, vale o arquivo de evidência. Não há métrica de tempo economizado, adoção ou uso real por Helison Dias — **isso não foi medido**. Auditoria em SHA `513b1158` **não aprovou publicação**; a revisão 2 só alinha documentação/evidência no draft.
 
 ## Próximos passos (dependem de revisão centralizada)
 
