@@ -14,6 +14,22 @@ describe("limites explícitos", () => {
     expect(ingested.result.activities).toHaveLength(0);
   });
 
+  it("recusa objeto já parseado cujo JSON serializado passa de 256 KiB", () => {
+    const ingested = ingestPayload(
+      emptyWorkspace(),
+      {
+        schema: "timesheet-inteligente.atividades.v1",
+        synthetic: true,
+        padding: "y".repeat(MAX_PAYLOAD_BYTES),
+        activities: [],
+      },
+      "json-import",
+    );
+    expect(ingested.result.ok).toBe(false);
+    expect(ingested.result.issues[0]?.code).toBe("LIMITE_PAYLOAD");
+    expect(ingested.result.activities).toHaveLength(0);
+  });
+
   it("recusa quantidade de itens acima do teto sem processar o lote", () => {
     const activities = Array.from({ length: MAX_ACTIVITIES + 1 }, (_, index) => ({
       nativeId: `n-${index}`,

@@ -1,7 +1,7 @@
 import { APP_TIMEZONE } from "./constants";
 import { reimportActivities } from "./dedupe";
 import { groupBySaoPauloDay } from "./group-days";
-import { LIMIT_COPY, payloadTooLarge } from "./limits";
+import { LIMIT_COPY, payloadTooLarge, serializedPayloadTooLarge } from "./limits";
 import { buildDraft } from "./proposal";
 import { validateImportPayload } from "./validate-import";
 import { warning } from "./warnings";
@@ -93,11 +93,39 @@ export function ingestJsonText(
   }
 }
 
+function rejectLimit(
+  state: WorkspaceState,
+  code: "LIMITE_PAYLOAD" | "PAYLOAD_INVALIDO",
+  message: string,
+): { state: WorkspaceState; result: ImportResult; draft: TimesheetDraft } {
+  const result: ImportResult = {
+    ok: false,
+    activities: [],
+    issues: [{ path: "$", message, code }],
+    warnings: [warning(code)],
+    sources: [],
+    synthetic: true,
+    timezone: APP_TIMEZONE,
+  };
+  return {
+    state: {
+      ...state,
+      importLog: [...state.importLog, result],
+      lastImportOk: false,
+    },
+    result,
+    draft: buildDraft(state.days, state.activities, state.sources),
+  };
+}
+
 export function ingestPayload(
   state: WorkspaceState,
   raw: unknown,
   adapter: "json-import" | "fixture-loader" | "offline-fixture" = "json-import",
 ): { state: WorkspaceState; result: ImportResult; draft: TimesheetDraft } {
+  if (serializedPayloadTooLarge(raw)) {
+    return rejectLimit(state, "LIMITE_PAYLOAD", LIMIT_COPY.payload);
+  }
   const result = validateImportPayload(raw, adapter);
   if (!result.ok) {
     return {

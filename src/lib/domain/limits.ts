@@ -16,6 +16,14 @@ export function payloadTooLarge(text: string): boolean {
   return utf8ByteLength(text) > MAX_PAYLOAD_BYTES;
 }
 
+export function serializedPayloadTooLarge(value: unknown): boolean {
+  try {
+    return payloadTooLarge(JSON.stringify(value));
+  } catch {
+    return false;
+  }
+}
+
 export function tooManyActivities(count: number): boolean {
   return count > MAX_ACTIVITIES;
 }
