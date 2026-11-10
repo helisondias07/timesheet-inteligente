@@ -86,3 +86,6 @@ Sincronização local futura (não executada aqui): `C:\Users\HelisonDias\Reposi
 - [Limitações](docs/limitacoes.md)
 - [Caso técnico para portfólio](docs/caso-tecnico-portfolio.md)
 - [Licenças de dependências](docs/licencas.md)
+- [Contrato de conteúdo](docs/contrato-conteudo.md)
+- [Auditoria de dependências](docs/auditoria-dependencias.md)
+- [Contraste](docs/contraste.md)

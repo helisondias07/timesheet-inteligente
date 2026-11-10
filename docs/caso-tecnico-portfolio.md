@@ -12,11 +12,11 @@ Pipeline determinístico no cliente: validar → identificar → deduplicar → 
 
 ## Decisões
 
-Ver [decisoes.md](decisoes.md). Destaque: identidade estável auditável; recusa de LLM; sanitização de importação/CSV; modo sintético obrigatório.
+Ver [decisoes.md](decisoes.md) e [contrato-conteudo.md](contrato-conteudo.md). Destaque: identidade estável; recusa de LLM; texto inerte vs href; CSV com fórmulas prefixadas; modo sintético.
 
 ## Resultados (somente o que foi medido nesta execução)
 
-Os números concretos de testes, typecheck e build vão no relatório final da sessão (contagem real após `npm test`, `npm run typecheck`, `npm run build` e, se rodou, Playwright). Não há métrica de tempo economizado, adoção ou precisão contra apontamentos reais — **isso não foi medido**.
+Números desta revisão: ver relatório final da sessão (typecheck limpo sem build, `test:all`, audit). Não há métrica de tempo economizado, adoção ou uso real por Helison Dias — **isso não foi medido**. Auditoria independente em SHA `513b1158` **não aprovou publicação**; esta continuação só corrige o MVP no draft.
 
 ## Próximos passos (dependem de revisão centralizada)
 

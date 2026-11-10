@@ -12,15 +12,15 @@ const UNSAFE_PROTOCOLS = new Set([
   "blob:",
 ]);
 
-export function stripHtml(input: string): { text: string; removed: boolean } {
-  const withoutBlocks = input.replace(
-    /<(script|style|iframe)\b[\s\S]*?<\/\1>/gi,
-    "",
-  );
-  const text = withoutBlocks.replace(/<\/?[^>]+>/g, "");
-  return { text, removed: text !== input };
+export function looksLikeMarkup(input: string): boolean {
+  return /<[^>]+>/.test(input);
 }
 
+/**
+ * Contrato: título/descrição são TEXTO, não HTML executável.
+ * Não apagamos conteúdo legítimo (incluindo `<img>` ou markdown).
+ * React deve renderizar como texto; nunca usar dangerouslySetInnerHTML.
+ */
 export function sanitizePlainText(input: unknown): {
   text: string;
   warnings: WarningCode[];
@@ -28,9 +28,15 @@ export function sanitizePlainText(input: unknown): {
   if (typeof input !== "string") {
     return { text: "", warnings: ["CAMPO_OBRIGATORIO"] };
   }
-  const { text, removed } = stripHtml(input);
-  const warnings: WarningCode[] = removed ? ["HTML_REMOVIDO"] : [];
-  return { text: text.replace(/\u0000/g, "").trim(), warnings };
+  const text = input.replace(/\u0000/g, "");
+  const warnings: WarningCode[] = looksLikeMarkup(text)
+    ? ["TEXTO_COM_MARCACAO"]
+    : [];
+  return { text: text.trim(), warnings };
+}
+
+export function hrefIfSafeHttp(raw: string): string | null {
+  return sanitizeUrl(raw).url;
 }
 
 export function sanitizeUrl(raw: string): {

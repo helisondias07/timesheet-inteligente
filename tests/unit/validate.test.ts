@@ -26,11 +26,14 @@ describe("validação de payload", () => {
     expect(missing?.warnings.some((warning) => warning.code === "FALTA_EVIDENCIA")).toBe(true);
   });
 
-  it("remove HTML e rejeita javascript/data URLs", () => {
+  it("mantém HTML como texto e rejeita javascript/data só em originUrls/href", () => {
     const result = validateImportPayload(successFixture);
     const injected = result.activities.find((item) => item.nativeId === "html-inject-01");
-    expect(injected?.title.includes("<script>")).toBe(false);
+    expect(injected?.title).toContain("<script>");
     expect(injected?.title).toContain("Título com HTML sintético");
+    expect(injected?.warnings.some((warning) => warning.code === "TEXTO_COM_MARCACAO")).toBe(
+      true,
+    );
     expect(injected?.provenance.originUrls).toEqual([
       "https://example.net/demo-sintetico/ok",
     ]);

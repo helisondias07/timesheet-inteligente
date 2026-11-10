@@ -1,27 +1,33 @@
 import { describe, expect, it } from "vitest";
-import { csvSafeCell, sanitizeUrl, stripHtml } from "@/lib/domain/sanitize";
+import {
+  csvSafeCell,
+  hrefIfSafeHttp,
+  sanitizePlainText,
+  sanitizeUrl,
+} from "@/lib/domain/sanitize";
 
-describe("sanitização", () => {
-  it("remove script e tags", () => {
-    const { text, removed } = stripHtml(
+describe("sanitização e contrato de texto", () => {
+  it("não apaga marcação; avisa que é texto", () => {
+    const { text, warnings } = sanitizePlainText(
       "<script>alert(1)</script>Título <b>ok</b>",
     );
-    expect(removed).toBe(true);
-    expect(text).not.toContain("<script>");
-    expect(text).not.toContain("alert(1)");
+    expect(text).toContain("<script>");
     expect(text).toContain("Título");
-    expect(text).toContain("ok");
+    expect(warnings).toContain("TEXTO_COM_MARCACAO");
   });
 
-  it("rejeita protocolos inseguros", () => {
-    expect(sanitizeUrl("javascript:alert(1)").url).toBeNull();
+  it("rejeita protocolos inseguros só para href", () => {
+    expect(hrefIfSafeHttp("javascript:alert(1)")).toBeNull();
     expect(sanitizeUrl("data:text/html,x").warning).toBe("URL_PROTOCOLO_INSEGURO");
-    expect(sanitizeUrl("https://example.org/demo").url).toContain("https://example.org/demo");
+    expect(sanitizeUrl("https://example.org/demo").url).toContain(
+      "https://example.org/demo",
+    );
   });
 
-  it("prefixa fórmulas CSV", () => {
+  it("prefixa fórmulas CSV em qualquer coluna de texto", () => {
     expect(csvSafeCell("=1+1")).toContain("'=1+1");
     expect(csvSafeCell("@SUM(A1)")).toContain("'@SUM(A1)");
+    expect(csvSafeCell("+1+1")).toContain("'+1+1");
     expect(csvSafeCell('linha "aspas"')).toContain('""aspas""');
   });
 });

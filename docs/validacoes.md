@@ -7,8 +7,10 @@
 - Timestamp: parseável **e** com fuso explícito.
 - Evidência: `kind` + `value`.
 - URLs: só `http`/`https`.
-- HTML removido de título/descrição.
-- `registeredHours`: nulo, ou número finito 0–12.
+- Título/descrição: texto inerte (marcação não é executada nem apagada).
+- URLs de origem: só `http`/`https` viram `href`; demais rejeitadas para link.
+- Tamanho: ver limites em `src/lib/domain/constants.ts` (`MAX_PAYLOAD_BYTES`, `MAX_ACTIVITIES`, `MAX_TEXT_LENGTH`, `MAX_URL_LENGTH`).
+- `registeredHours`: nulo, ou número finito 0–12. Vírgula ou ponto (`1,5` / `1.5`).
 
 ## Proposta / horas manuais
 

@@ -12,7 +12,11 @@
 | Edição e revisão no export | `tests/unit/export.test.ts` | Não existe |
 | Proveniência | pipeline + export | Não existe |
 | CSV acentos/aspas/quebra/fórmula | export unitário | Não existe |
-| Links inseguros | validate unitário | Não existe |
+| Links inseguros vs HTTPS | `security-contract.test.ts` (href, não eco) | Não existe |
+| Typecheck clone limpo | `npm ci` → `npm run typecheck` sem build | — |
+| Horas 1,5 e 1.5 | `duration.test.ts` | Não existe |
+| Limites payload/itens/texto | `limits.test.ts` | Não existe |
+| Diálogo atalhos (foco) | Playwright desktop+mobile | Não existe |
 | UI carregar-editar-revisar-exportar | Playwright | Não existe |
 | Porta GitHub | `github-offline-sintetico.json` | **Proibida** (`fetchRemote` erro) |
 | Porta ClickUp | `clickup-offline-sintetico.json` | **Proibida** |

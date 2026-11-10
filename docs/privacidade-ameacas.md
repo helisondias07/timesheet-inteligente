@@ -11,8 +11,8 @@
 
 | Ameaça | Mitigação neste MVP |
 | --- | --- |
-| Injeção HTML/JS no JSON | `stripHtml`; React escapa texto; URLs filtradas |
-| `javascript:` / `data:` | Protocolos recusados |
+| Marcação no JSON | Texto inerte; React escapa; sem `dangerouslySetInnerHTML` |
+| `javascript:` / `data:` em **href** | Recusados em `originUrls`; eco no texto não é execução |
 | Fórmula CSV (`=`, `+`, `-`, `@`) | Prefixo `'` |
 | Conteúdo de cliente real | Recusa de `synthetic !== true`; fixtures de exemplo |
 | Credenciais em repositório | Nenhuma chave; `.env*` no gitignore |

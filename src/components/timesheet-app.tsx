@@ -26,6 +26,7 @@ import {
   updateItemHours,
   updateItemText,
 } from "@/lib/domain/proposal";
+import { hrefIfSafeHttp } from "@/lib/domain/sanitize";
 import { formatDateLabel } from "@/lib/domain/timezone";
 import type { DailyProposal, TimesheetDraft, Warning } from "@/lib/domain/types";
 import {
@@ -624,20 +625,27 @@ function DayCard({
                 <dt className="font-semibold text-[var(--ink)]">Vínculos de origem</dt>
                 <dd>
                   {item.originUrls.length === 0 ? (
-                    "nenhum (URLs inseguras foram rejeitadas)"
+                    "nenhum (URLs de origem só viram link se forem http/https)"
                   ) : (
                     <ul className="mt-1 space-y-1">
-                      {item.originUrls.map((url) => (
-                        <li key={url}>
-                          <a
-                            className="underline decoration-[var(--teal)] underline-offset-2"
-                            href={url}
-                            rel="noreferrer noopener"
-                          >
-                            {url}
-                          </a>
-                        </li>
-                      ))}
+                      {item.originUrls.map((url) => {
+                        const href = hrefIfSafeHttp(url);
+                        return (
+                          <li key={url}>
+                            {href ? (
+                              <a
+                                className="underline decoration-[var(--teal)] underline-offset-2"
+                                href={href}
+                                rel="noopener noreferrer"
+                              >
+                                {url}
+                              </a>
+                            ) : (
+                              <span>{url}</span>
+                            )}
+                          </li>
+                        );
+                      })}
                     </ul>
                   )}
                 </dd>
