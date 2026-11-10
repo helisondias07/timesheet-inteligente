@@ -36,6 +36,13 @@ import {
 } from "@/lib/fixtures";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
@@ -72,6 +79,7 @@ export function TimesheetApp() {
   const [helpOpen, setHelpOpen] = useState(false);
   const [focusedDay, setFocusedDay] = useState(0);
   const importRef = useRef<HTMLTextAreaElement>(null);
+  const helpTriggerRef = useRef<HTMLButtonElement>(null);
 
   const commit = useCallback((next: WorkspaceState, nextDraft: TimesheetDraft) => {
     setWorkspace(next);
@@ -249,7 +257,6 @@ export function TimesheetApp() {
         event.preventDefault();
         setHelpOpen((open) => !open);
       }
-      if (event.key === "Escape") setHelpOpen(false);
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -361,10 +368,58 @@ export function TimesheetApp() {
                 <Download className="h-4 w-4" />
                 CSV
               </Button>
-              <Button variant="ghost" onClick={() => setHelpOpen(true)}>
-                <Keyboard className="h-4 w-4" />
-                Atalhos
-              </Button>
+              <Dialog open={helpOpen} onOpenChange={setHelpOpen}>
+                <DialogTrigger asChild>
+                  <Button
+                    ref={helpTriggerRef}
+                    variant="ghost"
+                    data-testid="help-trigger"
+                  >
+                    <Keyboard className="h-4 w-4" />
+                    Atalhos
+                  </Button>
+                </DialogTrigger>
+                <DialogContent
+                  data-testid="help-dialog"
+                  aria-describedby="atalhos-desc"
+                  onOpenAutoFocus={(event) => {
+                    event.preventDefault();
+                    document.getElementById("atalhos-titulo")?.focus();
+                  }}
+                  onCloseAutoFocus={(event) => {
+                    event.preventDefault();
+                    helpTriggerRef.current?.focus();
+                  }}
+                >
+                  <DialogTitle id="atalhos-titulo" tabIndex={-1}>
+                    Operação por teclado
+                  </DialogTitle>
+                  <p id="atalhos-desc" className="mt-1 text-sm text-[var(--muted-ink)]">
+                    Tab e Shift+Tab ficam neste diálogo. Escape fecha e devolve o
+                    foco ao botão Atalhos.
+                  </p>
+                  <ul className="mt-3 space-y-2 text-sm">
+                    {HELP.map(([key, text]) => (
+                      <li key={key}>
+                        <kbd className="rounded border border-[var(--rule)] bg-[var(--paper-strong)] px-1.5 py-0.5 font-mono text-xs">
+                          {key}
+                        </kbd>{" "}
+                        {text}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <DialogClose asChild>
+                      <Button data-testid="help-close">Fechar</Button>
+                    </DialogClose>
+                    <DialogClose asChild>
+                      <Button variant="outline" data-testid="help-ok">
+                        Entendi
+                      </Button>
+                    </DialogClose>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
           </section>
         </aside>
@@ -419,36 +474,6 @@ export function TimesheetApp() {
         </main>
       </div>
 
-      {helpOpen ? (
-        <div
-          role="dialog"
-          aria-labelledby="atalhos-titulo"
-          className="fixed inset-0 z-50 flex items-end justify-center bg-[rgba(22,20,28,0.45)] p-4 md:items-center"
-          onClick={() => setHelpOpen(false)}
-        >
-          <div
-            className="max-h-[80vh] w-full max-w-lg overflow-auto rounded-lg border border-[var(--rule)] bg-[var(--paper)] p-5"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <h2 id="atalhos-titulo" className="font-[family-name:var(--font-serif)] text-2xl">
-              Operação por teclado
-            </h2>
-            <ul className="mt-3 space-y-2 text-sm">
-              {HELP.map(([key, text]) => (
-                <li key={key}>
-                  <kbd className="rounded border border-[var(--rule)] bg-[var(--paper-strong)] px-1.5 py-0.5 font-mono text-xs">
-                    {key}
-                  </kbd>{" "}
-                  {text}
-                </li>
-              ))}
-            </ul>
-            <Button className="mt-4" onClick={() => setHelpOpen(false)}>
-              Fechar
-            </Button>
-          </div>
-        </div>
-      ) : null}
     </div>
   );
 }

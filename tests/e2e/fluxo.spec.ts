@@ -72,4 +72,26 @@ test.describe("fluxo UI carregar / importar / editar / revisar / exportar", () =
     await page.keyboard.press("Enter");
     await saveShot(page, `05-teclado-${testInfo.project.name}`);
   });
+
+  test("diálogo de atalhos prende foco, Escape devolve ao acionador", async ({
+    page,
+  }, testInfo) => {
+    await page.goto("/");
+    const trigger = page.getByTestId("help-trigger");
+    await trigger.click();
+    await expect(page.getByTestId("help-dialog")).toBeVisible();
+    await expect(page.locator("#atalhos-titulo")).toBeFocused();
+    await page.keyboard.press("Tab");
+    await expect(page.getByTestId("help-close")).toBeFocused();
+    await page.keyboard.press("Tab");
+    await expect(page.getByTestId("help-ok")).toBeFocused();
+    await page.keyboard.press("Tab");
+    await expect(page.getByTestId("help-close")).toBeFocused();
+    await page.keyboard.press("Shift+Tab");
+    await expect(page.getByTestId("help-ok")).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(page.getByTestId("help-dialog")).toHaveCount(0);
+    await expect(trigger).toBeFocused();
+    await saveShot(page, `06-dialogo-${testInfo.project.name}`);
+  });
 });
